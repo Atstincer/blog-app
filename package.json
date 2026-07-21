@@ -1,0 +1,29 @@
+{
+  "name": "blog-app",
+  "version": "1.0.0",
+  "description": "relational databases course",
+  "homepage": "https://github.com/Atstincer/blog-app#readme",
+  "bugs": {
+    "url": "https://github.com/Atstincer/blog-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Atstincer/blog-app.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.22.0",
+    "sequelize": "^6.37.8"
+  }
+}
