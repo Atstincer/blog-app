@@ -8,13 +8,14 @@ router.get('/', async (req, res) => {
   res.json(blogs)
 })
 
-router.post('/', async (req, res) => {
-  console.log('req.body', req.body)
+router.post('/', async (req, res, next) => {
+  //console.log('req.body', req.body)
   try {
     const blog = await Blog.create({ ...req.body })
     return res.json(blog)
   } catch (error) {
-    return res.status(400).json({ error })
+    //return res.status(400).json({ error })
+    next(error)
   }
 })
 
@@ -31,13 +32,16 @@ router.delete('/:id', blogFinder, async (req, res) => {
   return res.status(200).json({ message: 'Resource deleted' })
 })
 
-router.put('/:id', blogFinder, async (req, res) => {
-  if (!req.body.likes) {
-    return res.status(400).end()
+router.put('/:id', blogFinder, async (req, res, next) => {
+  console.log('req.blog', req.blog.toJSON())
+  try {
+    req.blog.likes = req.body.likes
+    await req.blog.save()
+    return res.json(req.blog)
+  } catch (error) {
+    //console.log('catching the error')
+    next(error)
   }
-  req.blog.likes = req.body.likes
-  await req.blog.save()
-  return res.json(req.blog)
 })
 
 module.exports = router
