@@ -31,6 +31,7 @@ router.put('/:username', async (req, res, next) => {
     })
     if (user) {
       user.name = req.body.name
+      //await user.validate() => throws an error if i try to change the name of a user with an invalid username / not valid email
       await user.save()
       return res.json(user)
     } else {
