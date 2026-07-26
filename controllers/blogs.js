@@ -54,7 +54,10 @@ const blogFinder = async (req, res, next) => {
 }
 
 //deletes a blog
-router.delete('/:id', blogFinder, async (req, res) => {
+router.delete('/:id', tokenExtractor, blogFinder, async (req, res) => {
+  if (req.decodedToken.id !== req.blog.userId) {
+    return res.status(403).json({ message: 'Unauthorized user' })
+  }
   await req.blog.destroy()
   return res.status(200).json({ message: 'Resource deleted' })
 })
