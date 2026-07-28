@@ -1,3 +1,4 @@
+const { Op } = require('sequelize')
 const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('../util/config')
@@ -6,12 +7,20 @@ const { Blog, User } = require('../models')
 
 //gets all blogs
 router.get('/', async (req, res) => {
+  const where = {}
+  if (req.query.search) {
+    where.title = {
+      [Op.iLike]: `%${req.query.search}%`,
+    } //Op.iLike for case insensitive and `%value%` for substring behavior
+  }
+
   const blogs = await Blog.findAll({
     attributes: { exclude: ['userId'] },
     include: {
       model: User,
       attributes: ['name'],
     },
+    where,
   })
   //console.log(blogs)
   res.json(blogs)
