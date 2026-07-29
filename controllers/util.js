@@ -2,8 +2,8 @@ const router = require('express').Router()
 const { Blog, User } = require('../models')
 
 router.post('/api/reset', async (req, res) => {
-  await Blog.destroy()
-  await User.destroy()
+  await Blog.destroy({ truncate: true })
+  await User.destroy({ truncate: true })
   return res.status(204).end()
 })
 
